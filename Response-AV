@@ -1,0 +1,22 @@
+const http = require("http");
+const server = http.createServer((req, res) => {
+  const ui = `
+    <div style="width: 100px; height: 100px; border-radius: 5px; background: pink; display: flex; justify-content: center; align-item: center">
+        <h1>AV</h1>
+    </div>
+    `;
+  res.write(ui);
+  res.end();
+});
+server.listen(1998);
+
+
+
+// Content type :
+
+mp4 -> video/mp4
+mp3 -> audio/mp3
+3gp -> video.3gp
+pdf -> application/pdf
+html -> text/html
+text -> text/plain
