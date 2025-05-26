@@ -1,1 +1,52 @@
+const http = require("http");
+const fs = require("fs");
+const url = require("url")
+const getContent = (filename)=>{
+  const arr = filename.split(".")
+  const extansion = arr[arr.length-1]
+  if(extansion==="mp4"){
+    return "video/mp4"
+  }
+  else if(extansion==="pdf"){
+    return "application/json"
+  }
+  else if(extansion==="mp3"){
+    return "audio/mp3"
+  }
+  else if(extansion==="jpg"){
+    return "image/jpg"
+  }
+  else if(extansion==="webp"){
+    return "image/webp"
+  }
+  else if(extansion==="gif"){
+    return "image/gif"
+  }
+  else{
+    return 'application/unknown'
+  }
+}
+const server = http.createServer((req, res) => {
+  
+  const location = url.parse(req.url, true)
+  const query = location.query
+  const path = `./file/${query.filename}`
+  try{
+    const data = fs.readFileSync("./file/Vikas_Resume.pdf")
+    res.writeHead(200,
+    {
+      'Content-Type' : getContent(filename),
+      'Content-Disposition' : `attachment; filename="${filename}"`,
+      'Content-Range' : data.length
+    })
+    res.write(data)
+    res.end()
+  }
+  catch(err){
+    res.writeHead(404, {'Content-Type' : 'text/html'})
+    res.write('<h1>File not found</h1>')
+    res.end()
+  }
+});
+server.listen(2001);
 
